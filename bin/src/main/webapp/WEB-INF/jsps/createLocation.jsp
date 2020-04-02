@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% page languange="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +6,7 @@
     <title>Create Location</title>
 </head>
 <body>
-<form action="saveLoc" method="post">
+<form action="" method="">
     <table>
         <tr>
             <td>Id</td>
@@ -36,16 +36,10 @@
             <td>Type</td>
             <td>:</td>
             <td>
-                <input name="type" type="radio" value="URBAN">Urban
+                Urban<input name="type" type="radio">
             </td>
-
-        </tr>
-
-        <tr>
-            <td></td>
-            <td></td>
             <td>
-                <input name="type" type="radio" value="RURAL">Rural
+                Rural<input name="type" type="radio">
             </td>
         </tr>
 
@@ -56,6 +50,5 @@
         </tr>
     </table>
 </form>
-${msg}
 </body>
 </html>
