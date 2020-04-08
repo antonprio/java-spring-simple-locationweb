@@ -1,8 +1,10 @@
 package com.antonprio.location.controllers;
 
 import com.antonprio.location.entities.Location;
+import com.antonprio.location.repos.LocationRepository;
 import com.antonprio.location.service.LocationService;
 import com.antonprio.location.util.EmailUtil;
+import com.antonprio.location.util.ReportUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +23,16 @@ public class LocationController {
     LocationService service;
 
     @Autowired
+    LocationRepository repository;
+
+    @Autowired
     EmailUtil emailUtil;
+
+    @Autowired
+    ReportUtil reportUtil;
+
+    @Autowired
+    ServletContext sc;
 
     @RequestMapping("/showCreate")
     public String showCreate() {
@@ -71,5 +83,13 @@ public class LocationController {
         List<Location> locations = service.getAllLocation();
         modelMap.addAttribute("locations", locations);
         return "displayLocations";
+    }
+
+    @RequestMapping("/generateReport")
+    public String generateReport() {
+        String path = sc.getRealPath("/");
+        List<Object[]> data = repository.findTypeAndTypeCount();
+        reportUtil.generatePieChart(path, data);
+        return "report";
     }
 }
