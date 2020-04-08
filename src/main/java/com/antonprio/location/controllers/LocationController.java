@@ -2,6 +2,7 @@ package com.antonprio.location.controllers;
 
 import com.antonprio.location.entities.Location;
 import com.antonprio.location.service.LocationService;
+import com.antonprio.location.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +19,9 @@ public class LocationController {
     @Autowired
     LocationService service;
 
+    @Autowired
+    EmailUtil emailUtil;
+
     @RequestMapping("/showCreate")
     public String showCreate() {
         return "createLocation";
@@ -28,6 +32,11 @@ public class LocationController {
         Location locationSaved = service.saveLocation(location);
         String msg = "Location saved with id: " + locationSaved.getId();
         modelMap.addAttribute("msg", msg);
+        emailUtil.sendEmail(
+                "aphmaildev123@gmail.com",
+                "Location Saved",
+                "Location saved successfuly and about to send response"
+        );
         return "createLocation";
     }
 
